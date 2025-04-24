@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class Monitor {
+class boundedBuffer {
 private:
   int CAPACITY;
   int* buffer;
@@ -20,7 +20,7 @@ private:
   condition_variable notFull;
 
 public:
-  Monitor(int buffersize) {
+  boundedBuffer(int buffersize) {
     CAPACITY = buffersize;
     buffer = new int[CAPACITY];
     tail = 0;

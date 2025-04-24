@@ -1,7 +1,7 @@
 #include <iostream>
 #include <thread>
 
-#include "monitor.h"
+#include "boundedBuffer.h"
 
 using namespace std;
 
@@ -17,6 +17,7 @@ int main(int argc, char *argv[]){
   int gid = atoi(argv[4]);
   string str = argv[5];
 
+  boundedBuffer buffer(buffsize);
+  
   return 0;
-
 }
