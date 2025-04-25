@@ -15,32 +15,12 @@
 
 using namespace std;
  
-int CAPACITY; /* Size of the buffer */
-
-string* buffer;
-
-/* The two endpoints of the queue */
-int tail;
-int head;
-
-/* Number of items currently in the buffer */
-int count;
-
-/* A lock to provide mutual exclusion */
-mutex pcLock;
-
-/* To condition variables for producer(s) and concumer(s) to synchronize with each other */
-condition_variable notEmpty;
-condition_variable notFull;
-
-
 boundedBuffer::boundedBuffer(int buffersize){
    CAPACITY = buffersize;
    buffer = new string[CAPACITY];
    tail = 0;
    head = 0;
    count = 0;
-
 }
 
 /* Function used to add an item to the buffer */
@@ -60,8 +40,6 @@ void boundedBuffer::add( string str )
    buffer[tail] = str;
    tail = (tail + 1) % CAPACITY;
    ++count;
-
-   cout << "String added: " << str << endl;
 
    /* Wake up a consumer */
    /* Use notify_all( ) to wake up all consumers */
@@ -91,8 +69,6 @@ string boundedBuffer::remove( void )
    buffer[head] = "";
    head = (head + 1) % CAPACITY;
    --count;
-   
-   cout << "String " << str << endl;
 
    /* Wake up a producer */
    /* Use notify_all( ) to wake all producers */
