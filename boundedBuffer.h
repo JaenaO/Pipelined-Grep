@@ -1,5 +1,5 @@
-#ifndef MONITOR_H
-#define MONITOR_H
+#ifndef BOUNDED_BUFFER_H
+#define BOUNDED_BUFFER_H
 
 #include <thread>
 #include <mutex>
@@ -10,7 +10,7 @@ using namespace std;
 class boundedBuffer {
 private:
   int CAPACITY;
-  int* buffer;
+  string* buffer;
   int tail;
   int head;
   int count;
@@ -20,15 +20,9 @@ private:
   condition_variable notFull;
 
 public:
-  boundedBuffer(int buffersize) {
-    CAPACITY = buffersize;
-    buffer = new int[CAPACITY];
-    tail = 0;
-    head = 0;
-    count = 0;
-  }
-  void add(int number);
-  int remove(void);
+  boundedBuffer(int buffersize);
+  void add(string str);
+  string remove(void);
 };
 
-#endif // MONITOR_H
+#endif // BOUNDED_BUFFER_H
