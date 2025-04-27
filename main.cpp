@@ -31,23 +31,15 @@ int main(int argc, char *argv[])
 
   thread t1(stage1, ref(buff1));
   thread t2(stage2, ref(buff1), ref(buff2), filesize, uid, gid);
-  thread t3(stage3, ref(buff2), ref(buff3), str);
-  thread t4(stage4, ref(buff3), ref(buff4));
+  thread t3(stage3, ref(buff2), ref(buff3));
+  thread t4(stage4, ref(buff3), ref(buff4), str);
   thread t5(stage5, ref(buff4));
-
-  // Main acting as a consumer for stage 2
-  string filename;
-  while (true) // clean up buffer
-  {
-    filename = buff4.remove(); // future- buff4 and print&remove
-    if (filename == "done")
-    {
-      break;
-    }
-  }
 
   t1.join();
   t2.join();
+  t3.join();
+  t4.join();
+  t5.join();
 
   cout << "All Stages completed." << endl;
   return 0;
