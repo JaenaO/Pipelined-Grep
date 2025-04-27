@@ -111,9 +111,9 @@ void stage4(boundedBuffer &buff3, boundedBuffer &buff4, string str)
     else
     {
       // Check if the line contains the given substring
+      // uses this snippet -> https://www.geeksforgeeks.org/stringnpos-in-c-with-examples/
       if (line.find(str) != string::npos)
       {
-        // cout << "Keyword " << str << " found in line: " << line << endl;
         buff4.add(line); // Add the line to buff4 if it contains the substring
       }
     }
