@@ -49,7 +49,7 @@ void stage2(boundedBuffer &buff1, boundedBuffer &buff2, int filesize, int uid, i
     bool addFile = true;
     if (stat(filename.c_str(), &stats) == 0)
     {
-      if (filesize != -1 && stats.st_size > filesize)
+      if (filesize != -1 && stats.st_size <= filesize)
       {
         addFile = false;
       }
