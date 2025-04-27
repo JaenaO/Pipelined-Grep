@@ -3,6 +3,8 @@
 
 #include "boundedBuffer.h"
 #include "pipelineGrepStages.h"
+#include <thread>
+#include <functional> // For std::ref
 
 using namespace std;
 
@@ -23,19 +25,21 @@ int main(int argc, char *argv[])
   boundedBuffer buff1(buffsize); // getting file names from directory
   boundedBuffer buff2(buffsize);
   boundedBuffer buff3(buffsize);
+  boundedBuffer buff4(buffsize); //
+  boundedBuffer buff5(buffsize); //
   // boundedbuffer buff4
 
   thread t1(stage1, ref(buff1));
   thread t2(stage2, ref(buff1), ref(buff2), filesize, uid, gid);
-  thread t3(stage3, ref(buff2), ref(buff3), str); // stage 3 is not implemented
-  // thread t4
-  // thread t5
+  thread t3(stage3, ref(buff2), ref(buff3), str);
+  thread t4(stage4, ref(buff3), ref(buff4));
+  thread t5(stage5, ref(buff4));
 
   // Main acting as a consumer for stage 2
   string filename;
   while (true) // clean up buffer
   {
-    filename = buff3.remove(); // future- buff4 and print&remove
+    filename = buff4.remove(); // future- buff4 and print&remove
     if (filename == "done")
     {
       break;
@@ -45,6 +49,6 @@ int main(int argc, char *argv[])
   t1.join();
   t2.join();
 
-  cout << "Stage 1 and Stage 2 completed." << endl;
+  cout << "All Stages completed." << endl;
   return 0;
 }

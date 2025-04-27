@@ -94,3 +94,35 @@ void stage3(boundedBuffer &buff2, boundedBuffer &buff3, string str)
     file.close();
   }
 }
+
+void stage4(boundedBuffer &buff3, boundedBuffer &buff4)
+{
+  string line;
+  while (true)
+  {
+    line = buff3.remove(); // Remove a line from buff3
+    if (line == "done")
+    {
+      buff4.add("done");
+      break;
+    }
+    // Process the line as needed
+    cout << "Processing line: " << line << endl;
+    buff4.add(line); // Add the processed line to buff4
+  }
+}
+
+void stage5(boundedBuffer &buff4)
+{
+  string line;
+  while (true)
+  {
+    line = buff4.remove(); // Remove a line from buff4
+    if (line == "done")
+    {
+      break;
+    }
+    // Print the line or process it further
+    cout << "Final output: " << line << endl;
+  }
+}
