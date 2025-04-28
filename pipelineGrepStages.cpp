@@ -9,8 +9,7 @@
 
 using namespace std;
 
-// The thread in this stage recurses through the current directory and adds filenames to the first buffer
-//(buff1 ).
+// The thread in this stage goes through the current directory and adds all filenames to the first buffer
 void stage1(boundedBuffer &buff1)
 {
   DIR *dir = opendir(".");
@@ -28,8 +27,8 @@ void stage1(boundedBuffer &buff1)
 }
 /*
 In this stage, the thread will read filenames from buff1 and filter out files according to the values
-provided on the command-line for ⟨filesize⟩, ⟨uid⟩, and ⟨gid⟩ as described above. Those files not
-filtered out are added to buff2
+provided on the command-line for ⟨filesize⟩, ⟨uid⟩, and ⟨gid⟩ as provided. Those files fit the criteria are
+added to buff2
 */
 void stage2(boundedBuffer &buff1, boundedBuffer &buff2, int filesize, int uid, int gid)
 {
@@ -47,6 +46,7 @@ void stage2(boundedBuffer &buff1, boundedBuffer &buff2, int filesize, int uid, i
     }
 
     bool addFile = true;
+    // if get stats successfully
     if (stat(filename.c_str(), &stats) == 0)
     {
       if (filesize != -1 && stats.st_size <= filesize)
@@ -127,14 +127,17 @@ you can use a “done” token (would not work if you had multiple threads in a 
 void stage5(boundedBuffer &buff4)
 {
   string line;
+  int count = 0;
   while (true)
   {
     line = buff4.remove(); // Remove a line from buff4
-    cout << "" << line << endl;
     if (line == "done")
     {
+      cout << "There are " << count << " matches!" << endl;
       break;
     }
+    count++;
+    cout << "" << line << endl;
     //  Print the line or process it further
   }
 }

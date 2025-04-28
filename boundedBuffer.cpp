@@ -1,4 +1,8 @@
-/* Note: This file is built on given starter code that implements a solution to the producer consumer problem using monitors*/
+/* 
+Note: This file is built on given starter code that implements a solution to the producer consumer problem using monitors
+main change is turning int array into string array
+which means that the buffer adds and removes strings instead of ints
+*/
 
 #include <iostream>
 #include <thread>
