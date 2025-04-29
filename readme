@@ -1,0 +1,34 @@
+Jaena Orozco, Katy Soddy
+Programming Project 3
+
+Compile:
+g++ -std=c++11 -pthread main.cpp boundedBuffer.cpp pipelineGrepStages.cpp -o pipegrep
+
+Run:
+./pipegrep <buffsize> <filesize> <uid> <gid> <string>
+
+1.  This project implements a multithreaded pipeline grep utility that searches for a specified string pattern across files in the current directory.
+    The implementation uses a producer-consumer pattern with five stages, each running in its own thread.
+    Each stage communicates with adjacent stages through bounded buffers, which are thread-safe data structures that implement the producer-consumer pattern using monitors.
+
+    The program has working:
+-   customizable buffersize between pipeline stages
+-   toggleable filter based on maximum filesize
+-   toggleable user id file filter
+-   toggleable group id file filter
+-   string search
+
+2.  The critical sections are located in boundedBuffer.cpp.
+    The add() and remove() methods are critical sections because they interact directly with the buffer, which is shared across all threads.
+    They are protected by the mutex pcLock and use variables to to check if its full or empty.
+
+3.  The buffer size that gives optimal performance for 30 or more files is 16.  Buffers that are too small cause blockages in the buffer, and buffers that are too large take up too much memory
+
+4.  I think that stage 3 needs an additional thread the most.
+    The file reading operation is the most time consuming one, since files can have lots of lines.
+    Multiple threads would make it go faster.
+
+5.  There are a few bugs that can happen in this code.
+    Errors can happen with the memory management, since we didn't delete[] it.
+    There are also no guards with special characters that might occur in the file.
+    There might also be problems if there is a file named "done" as it might be confused for the done token.
