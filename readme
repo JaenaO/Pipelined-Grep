@@ -2,7 +2,7 @@ Jaena Orozco, Katy Soddy
 Programming Project 3
 
 Compile:
-g++ -std=c++11 -pthread main.cpp boundedBuffer.cpp pipelineGrepStages.cpp -o pipegrep
+make
 
 Run:
 ./pipegrep <buffsize> <filesize> <uid> <gid> <string>
